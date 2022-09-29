@@ -140,6 +140,110 @@ class Solution:
             l += 1
             r -= 1
 
+    def reverse(self, x: int) -> int:
+        isNegative = False
+        if x < 0:
+            isNegative = True
+            x = x * -1
+        r = int(str(x)[::-1])
+        if abs(r) < 2**31 and r != 2**31 - 1:
+            return -r if isNegative else r
+        else:
+            return 0
+        return -r if isNegative else r
+
+    def firstUniqChar(self, s: str) -> int:
+        c = {}
+        for i in range(len(s)):
+            if s[i] in c:
+                c[s[i]] = c[s[i]] + 1
+            else:
+                c[s[i]] = 1
+
+        for i, value in enumerate(c):
+            print(i, value)
+            if c[value] == 1:
+                return s.index(value)
+
+        return -1
+
+    def isAnagram(self, s: str, t: str) -> bool:
+        sl, tl = list(s), list(t)
+        sl.sort()
+        tl.sort()
+        if ''.join(sl) == ''.join(tl):
+            return True
+        return False
+
+    def isPalindrome(self, s: str) -> bool:
+        s = ''.join(filter(str.isalnum, s)).lower()
+        revStr = ''.join(list(s)[::-1]).lower()
+        return s == revStr
+
+    def myAtoi(self, s: str) -> int:
+        isNegative = None
+        ints = []
+        for index, value in enumerate(s):
+            l = len(ints)
+            if (value == '-' or value == '+') and (isNegative != None or l > 0):
+                break
+            if value == ' ' and isNegative != None:
+                break
+            if value == '-':
+                isNegative = True
+                continue
+            if value == '+':
+                isNegative = False
+                continue
+            if l == 0 and value == ' ':
+                continue
+            if value.isnumeric():
+                ints.append(value)
+            else:
+                break
+        if len(ints) == 0:
+            return 0
+        else:
+            n = int(''.join(ints))
+            n = -int(n) if isNegative else int(n)
+            if n > (2**31) - 1:
+                return 2**31 - 1
+            if n < (-2**31):
+                return -2**31
+            else:
+                return n
+
+    def strStr(self, haystack: str, needle: str) -> int:
+        h_len, n_len = len(haystack), len(needle)
+        if n_len > h_len:
+            return -1
+        if h_len == n_len and haystack == needle:
+            return 0
+        if h_len == n_len and haystack != needle:
+            return -1
+        for i in range(h_len):
+            if needle == haystack[i:n_len+i]:
+                return i
+        return -1
+
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        common = ""
+        current = ""
+
+        strs = sorted(strs, key=len)
+        for j in range(len(strs[0])):
+            for i in range(len(strs)):
+                if strs[i] == "":
+                    return ""
+                if i == 0:
+                    current = strs[i][j]
+                    continue
+                if strs[i][j] != current:
+                    current = ""
+                    return common
+            common = common + current
+        return common
+
 
 strs = ["flower", "flow", "flight"]
 print(Solution().longestCommonPrefix(strs))
