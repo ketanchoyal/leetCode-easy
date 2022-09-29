@@ -140,6 +140,7 @@ class Solution:
             l += 1
             r -= 1
 
+    # Strings
     def reverse(self, x: int) -> int:
         isNegative = False
         if x < 0:
@@ -244,9 +245,29 @@ class Solution:
             common = common + current
         return common
 
+    # Linked List
+    # Definition for singly-linked list.
+    class ListNode:
+        def __init__(self, x):
+            self.val = x
+            self.next = None
 
-strs = ["flower", "flow", "flight"]
-print(Solution().longestCommonPrefix(strs))
+    def deleteNode(self, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
+        nextNode = node.next
+        node.val = nextNode.val
+        node.next = nextNode.next
+        nextNode.val = None
+        del (nextNode)
+        # OR
+        # node.val = node.next.val
+        # node.next = node.next.next
+
+# strs = ["flower", "flow", "flight"]
+# print(Solution().longestCommonPrefix(strs))
 
 # haystack = "hello"
 # needle = "ll"
