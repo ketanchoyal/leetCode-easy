@@ -1,5 +1,13 @@
-from typing import List
+from typing import List, Optional
 import math
+
+# Definition for singly-linked list.
+
+
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
 
 class Solution:
@@ -246,11 +254,6 @@ class Solution:
         return common
 
     # Linked List
-    # Definition for singly-linked list.
-    class ListNode:
-        def __init__(self, x):
-            self.val = x
-            self.next = None
 
     def deleteNode(self, node):
         """
@@ -266,8 +269,55 @@ class Solution:
         # node.val = node.next.val
         # node.next = node.next.next
 
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        if head is None:
+            return head
+        fast = slow = head
+        for _ in range(n):
+            fast = fast.next
+        if not fast:
+            return head.next
+        while fast.next:
+            fast = fast.next
+            slow = slow.next
+
+        slow.next = slow.next.next
+        return head
+
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        curr, pre = head, None
+        while curr:
+            nxt = curr.next
+            curr.next = pre
+            pre = curr
+            curr = nxt
+
+        return pre
+        # OR
+        # if head is None or head.next is None:
+        #     return heads
+        # temp = head
+        # l = []
+        # while temp:
+        #     l.append(temp.val)
+        #     temp = temp.next
+        # node = ListNode(0)
+        # nextNode = node
+        # for _, v in enumerate(reversed(l)):
+        #     nextNode.next = ListNode(v)
+        #     nextNode = nextNode.next
+        # return node.next
+
+
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+head.next.next.next = ListNode(4)
+head.next.next.next.next = ListNode(5)
+# Solution().removeNthFromEnd(head, 2)
 # strs = ["flower", "flow", "flight"]
 # print(Solution().longestCommonPrefix(strs))
+Solution().reverseList(head)
 
 # haystack = "hello"
 # needle = "ll"
