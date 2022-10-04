@@ -308,6 +308,69 @@ class Solution:
         #     nextNode = nextNode.next
         # return node.next
 
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        l1 = []
+
+        while list1:
+            l1.append(list1.val)
+            list1 = list1.next
+        while list2:
+            l1.append(list2.val)
+            list2 = list2.next
+        final = list3 = ListNode(0)
+        run = True
+
+        l1 = sorted(l1)
+        len1 = len(l1)
+        for _, v in enumerate(l1):
+            list3.next = ListNode(v)
+            list3 = list3.next
+
+        return final.next
+
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        if head.next is None:
+            return True
+        l = []
+        while head:
+            l.append(head.val)
+            head = head.next
+
+        length = len(l)
+        for i in range(int(length/2)):
+            if l[i] != l[-(i+1)]:
+                return False
+        return True
+        # OR
+        # if head.next is None:
+        #     return True
+
+        # original = head
+        # headReverse = self.reverseList(head)
+
+        # while original and headReverse:
+        #     if original.val != headReverse.val:
+        #         return False
+        #     original = original.next
+        #     headReverse = headReverse.next
+        # return True
+
+    # Floyd's Tortoise and Hare Algorithm
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        if head is None:
+            return False
+        fast = slow = head
+        while fast or slow:
+            slow = slow.next
+            if slow is None or slow.next is None:
+                return False
+            if fast.next is None or fast.next.next is None:
+                return False
+            fast = fast.next.next
+            if fast == slow:
+                return True
+        return False
+
 
 head = ListNode(1)
 head.next = ListNode(2)
@@ -317,7 +380,8 @@ head.next.next.next.next = ListNode(5)
 # Solution().removeNthFromEnd(head, 2)
 # strs = ["flower", "flow", "flight"]
 # print(Solution().longestCommonPrefix(strs))
-Solution().reverseList(head)
+# Solution().reverseList(head)
+Solution().mergeTwoLists(head, head.next)
 
 # haystack = "hello"
 # needle = "ll"
